@@ -3,9 +3,6 @@ package TCP;
 import java.io.*;
 import java.net.*;
  
-// Recebe uma mensagem de algum cliente
-// Imprime mensagem na tela
-
 public class TCPServer {
  
     private static DataOutputStream dataOutputStream = null;

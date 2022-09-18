@@ -4,9 +4,6 @@ import java.net.*;
 import java.util.Scanner;
 import java.io.*;
  
-// Le uma linha do teclado
-// Envia a linha digitada ao servidor
-
 public class TCPClient {
  
     private static DataOutputStream dataOutputStream = null;
