@@ -6,7 +6,7 @@ package UDP;
 
 import java.io.*; // classes para input e output streams e
 import java.net.*;// DatagramaSocket,InetAddress,DatagramaPacket
-
+import java.util.Arrays;
 class UDPClient {
    private static DataInputStream dataInputStream = null;
 
@@ -23,7 +23,7 @@ class UDPClient {
       DatagramSocket clientSocket = new DatagramSocket();
       byte[] sendData = new byte[16*1024];
 
-      FileInputStream f = new FileInputStream("../lib/max.txt");
+      FileInputStream f = new FileInputStream("../../lib/max.txt");
 
       // f.read(sendData)      
       
@@ -34,13 +34,31 @@ class UDPClient {
                   sendData[i]=(byte)f.read();
                   i++;
       }
+      System.out.println(sendData.length);
+      int size = i;
+      int n=0, aux =0;
+      while(size>= 0)
+      { 
+         n=aux;
+         aux+=512;
+            System.out.println("Aux " + size);
+         if(size>=512){
+            System.out.println("Sending data to server...");
+            DatagramPacket sendPacket = new DatagramPacket(Arrays.copyOfRange(sendData, n, aux), 512, IPAddress, port);
+            clientSocket.send(sendPacket);
+         }
+         else{
+            System.out.println("Final data");
+            DatagramPacket sendPacket = new DatagramPacket(Arrays.copyOfRange(sendData, n, sendData.length), size, IPAddress, port);
+            clientSocket.send(sendPacket);
+         }
+         size -=512;
+      }   
       f.close();
       
       System.out.println(sendData[100]);
       // cria pacote com o dado, o endereco do server e porta do servidor
-      DatagramPacket sendPacket = new DatagramPacket(sendData, i, IPAddress, port);
       //envia o pacote
-      clientSocket.send(sendPacket);
 
       // fecha o cliente
       clientSocket.close();

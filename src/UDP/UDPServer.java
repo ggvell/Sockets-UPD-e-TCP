@@ -22,7 +22,7 @@ class UDPServer {
          int remoteServerPort = serverSocket.getLocalPort();
          System.out.println("server running on port : " + remoteServerPort);
                byte buffer[]=new byte[16*1024];
-               FileOutputStream f=new FileOutputStream("UDP/arqMax.txt");
+               FileOutputStream f=new FileOutputStream("../UDP/arqMax.txt");
                while(true)
                {
                            DatagramPacket dp=new DatagramPacket(buffer,buffer.length);
