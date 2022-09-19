@@ -23,7 +23,7 @@ class UDPClient {
       DatagramSocket clientSocket = new DatagramSocket();
       byte[] sendData = new byte[16*1024];
 
-      FileInputStream f = new FileInputStream("../lib/max.txt");
+      FileInputStream f = new FileInputStream("../../lib/max.txt");
 
       // f.read(sendData)      
       
