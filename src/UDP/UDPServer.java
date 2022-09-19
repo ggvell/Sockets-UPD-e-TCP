@@ -10,32 +10,25 @@ import java.net.*;
 class UDPServer {
    public static void main(String args[])  throws Exception
       {
-         if (args.length < 1) {
-            System.out.println("Usage: java UDPServer <port>");
-            return;
-         }
+         // if (args.length < 1) {
+         //    System.out.println("Usage: java UDPServer <port>");
+         //    return;
+         // }
 
          int port = Integer.parseInt(args[0]);
 
-         // cria socket do servidor com a porta 9876
-         DatagramSocket serverSocket = new DatagramSocket(9876);
-
-            byte[] receiveData = new byte[1024];
-            while(true)
+         // cria socket do servidor com a porta 2000
+         DatagramSocket serverSocket = new DatagramSocket(2000);
+         int remoteServerPort = serverSocket.getLocalPort();
+         System.out.println("server running on port : " + remoteServerPort);
+               byte buffer[]=new byte[16*1024];
+               FileOutputStream f=new FileOutputStream("UDP/arqMax.txt");
+               while(true)
                {
-                  // declara o pacote a ser recebido
-                  DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-
-                  // recebe o pacote do cliente
-                  serverSocket.receive(receivePacket);
-
-                  // pega os dados, o endereco IP e a porta do cliente
-                  // para poder mandar a msg de volta
-                  String sentence = new String(receivePacket.getData());
-                  InetAddress IPAddress = receivePacket.getAddress();
-                  int receivePort = receivePacket.getPort();
-
-                  System.out.println("Mensagem recebida: " + sentence);
+                           DatagramPacket dp=new DatagramPacket(buffer,buffer.length);
+                           serverSocket.receive(dp);
+                           System.out.println(buffer[100]);  
+                           f.write(buffer,0,dp.getLength());                           
                }
       }
 }
