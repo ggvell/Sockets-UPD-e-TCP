@@ -12,28 +12,31 @@ class UDPClient {
 
    public static void main(String args[]) throws Exception
    {
-      if (args.length < 2) {
-         System.out.println("Usage: java UDPClient <server_ip> <port>");
-         return;
-      }
+      // if (args.length < 2) {
+      //    System.out.println("Usage: java UDPClient <server_ip> <port>");
+      //    return;
+      // }
       String serverAddr = args[0];
       int port = Integer.parseInt(args[1]);
 
       // declara socket cliente
-      DatagramSocket clientSocket = new DatagramSocket(2000);
-      byte[] sendData = new byte[1024];
+      DatagramSocket clientSocket = new DatagramSocket();
+      byte[] sendData = new byte[16*1024];
 
-      FileInputStream f=new FileInputStream("../../lib/min.txt");
-      // obtem endereco IP do servidor com o DNS
+      FileInputStream f = new FileInputStream("../lib/max.txt");
+
+      // f.read(sendData)      
+      
       InetAddress IPAddress = InetAddress.getByName(serverAddr);
       int i =0;
-      while(f.read(sendData) != -1)
+      while(f.available()!=0)
       {
                   sendData[i]=(byte)f.read();
                   i++;
-      }                    
+      }
       f.close();
-
+      
+      System.out.println(sendData[100]);
       // cria pacote com o dado, o endereco do server e porta do servidor
       DatagramPacket sendPacket = new DatagramPacket(sendData, i, IPAddress, port);
       //envia o pacote
